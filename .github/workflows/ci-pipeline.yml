@@ -28,7 +28,9 @@ jobs:
         run: npm install
         
       - name: Run Lint
-        run: npm run test:lint
+        run: |
+          mkdir -p logs
+          npm run test:lint 2>&1
 
       # Failure artifact
       - if: github.ref == 'refs/heads/main' && failure()
