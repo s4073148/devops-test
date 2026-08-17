@@ -30,7 +30,7 @@ jobs:
       - name: Run Lint
         run: |
           mkdir -p logs
-          npm run test:lint 2>&1
+          npm run test:lint 2>&1 | tee logs/lint.log
 
       # Failure artifact
       - if: github.ref == 'refs/heads/main' && failure()
