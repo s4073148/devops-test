@@ -25,6 +25,20 @@ jobs:
       - name: Run Lint
         run: npm run test:lint
 
+      # Failure artifact
+      - if: github.ref == 'main' && failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-${{ github.sha }}
+          path: logs/lint.log
+
+      # Success artifact
+      - if: github.ref == 'main' && success()
+        uses: actions/upload-artifact@v7 
+        with:
+          name: lint-${{ github.sha }}
+          path: logs/lint.log
+
   unit-test:
     needs: lint
     runs-on: ubuntu-latest
