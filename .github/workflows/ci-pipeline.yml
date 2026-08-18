@@ -43,6 +43,7 @@ jobs:
 
   unit-test:
     needs: lint
+    if: always()
     runs-on: ubuntu-latest
 
     defaults:
