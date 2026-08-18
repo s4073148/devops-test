@@ -30,21 +30,21 @@ jobs:
       - name: Run Lint
         run: |
           mkdir -p logs
-          npm run test:lint 2>&1 | tee logs/lint.log
+          npm run test:lint 2>&1
 
       # Failure artifact
       - if: github.ref == 'refs/heads/main' && failure()
         uses: actions/upload-artifact@v4
         with:
           name: lint-${{ github.sha }}
-          path: logs/lint.log
+          path: src/logs/lint.log
 
       # Success artifact
       - if: github.ref == 'refs/heads/main' && success()
         uses: actions/upload-artifact@v7 
         with:
           name: lint-${{ github.sha }}
-          path: logs/lint.log
+          path: src/logs/lint.log
 
   unit-test:
     needs: lint
