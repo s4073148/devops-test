@@ -1,12 +1,13 @@
 name: Notes Application CI Pipeline
 
 on:
+  # Runs on every change on every branch
   push:
     branches:
-      - main
+      - '**'
   pull_request:
     branches:
-      - main
+      - '**'
       
 jobs:
   lint:
@@ -32,16 +33,10 @@ jobs:
           mkdir -p logs
           npm run test:lint 2>&1 | tee logs/lint.log
 
-      # Failure artifact
-      - if: github.ref == 'refs/heads/main' && failure()
+      # Lint artifact
+      # Only produce artifact if on main branch
+      - if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
-        with:
-          name: lint-${{ github.sha }}
-          path: src/logs/lint.log
-
-      # Success artifact
-      - if: github.ref == 'refs/heads/main' && success()
-        uses: actions/upload-artifact@v7 
         with:
           name: lint-${{ github.sha }}
           path: src/logs/lint.log
@@ -61,11 +56,14 @@ jobs:
         run: npm install
 
       - name: Run Unit Tests
-        run: npm run test:unit
+        run: |
+          mkdir -p logs/coverage
+          npm run test:unit
 
-      # Upload test results
-      - if: success()
-        uses: actions/upload-artifact@v7 
+      # Unit test artifact
+      # Only produce artifact if on main branch
+      - if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
         with:
           name: unit-test-${{ github.sha }}
-          path: coverage/lcov-report
+          path: src/logs/coverage/
