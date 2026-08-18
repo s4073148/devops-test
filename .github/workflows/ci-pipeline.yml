@@ -62,7 +62,7 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          mkdir -p logs/coverage
+          mkdir -p coverage
           npm run test:unit
 
       # Unit test artifact
@@ -71,4 +71,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: unit-test-${{ github.sha }}
-          path: src/logs/coverage/
+          path: src/coverage/locv-report
