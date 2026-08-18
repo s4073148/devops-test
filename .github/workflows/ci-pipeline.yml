@@ -48,7 +48,7 @@ jobs:
     defaults:
       run:
         working-directory: ./src
-
+        
     steps:
       - uses: actions/checkout@v7
 
@@ -62,7 +62,7 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          mkdir -p logs/unit-test.log
+          mkdir -p logs/coverage
           npm run test:unit
 
       # Unit test artifact
@@ -71,4 +71,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: unit-test-${{ github.sha }}
-          path: src/logs/unit-test.log
+          path: src/logs/coverage/
