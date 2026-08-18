@@ -35,7 +35,7 @@ jobs:
 
       # Lint artifact
       # Only produce artifact if on main branch
-      - if: github.ref == 'refs/heads/main'
+      - if: (success() || failure()) || github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
           name: lint-${{ github.sha }}
@@ -68,7 +68,7 @@ jobs:
 
       # Unit test artifact
       # Only produce artifact if on main branch
-      - if: github.ref == 'refs/heads/main'
+      - if: (success() || failure()) || github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
           name: unit-test-${{ github.sha }}
