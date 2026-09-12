@@ -1,9 +1,30 @@
 # Analysis
 
-## What is to Solve?
+## What is the Problem to solve?
 
-*Placeholder*
+YeetCode Inc builds and deploys their code from their lead developer's laptop, despite the source code being stored in GitHub.
+
+There are several problems that come from this process of development, which includes:
+- Pete's leave introduced missing critical releases
+- Bugs introduced into production (Assumingly from an oversight during quality checks)
+- Strain on the QA team, as not only they have to manually perform quality checks, but also work overtime to handle errors that leak into production.
+
+To solve this, we establish a CI pipeline in order to not only reduce dependency on Pete, but also reduce strain on the QA team.
+We do this by:
+- Automated builds
+- Automated testing processes
+- Streamlining the debugging process by quickly picking up bugs and feeding them back to developers to be resolved.
 
 ## How The Solution works?
 
-*Placeholder*
+This Solution specifically uses GitHub Actions as the CI/CD pipeline. With GitHub Actions, we specify jobs needed for this CI process in a .yaml file stored in a directory with this path: ./.github/workflows/
+
+Additionally, while the work is being done, GitHub Flow is used as the branching strategy, utilizing feature branches and pull reqeusts. This is to isolate new work from the main codebase so that unfinished/buggy code does not leak into the live application.
+
+In this CI process, we define the jobs that should run in all branches when push/pull requests are made, using a wildcard of "**". Afterwards all jobs are run as specified on trigger depending on their dependencies.
+
+First, all testing jobs are run in sequence, with predecessors as dependencies. These are linting, unit testing, and e2e testing, all ran in sequence. For each tests, an artefact is created, as long as the trigger comes from the main branch.
+
+After this, a deploayble artefact of the app is deployes on 2 conditions:
+1. All tests are passed
+2. The trigger comes from the main branch
