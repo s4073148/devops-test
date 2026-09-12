@@ -146,10 +146,8 @@ jobs:
 
       - name: Make Deployable
         run: |
-          cd src
           mkdir -p deployable-${{ github.sha }}
           cp -R src/. deployable-${{ github.sha }}/
-          cp app.js package.json package-lock.json deployable-${{ github.sha }}/
 
       - name: Upload Deployable Artifact
         uses: actions/upload-artifact@v4
