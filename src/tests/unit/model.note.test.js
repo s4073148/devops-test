@@ -9,15 +9,15 @@ describe('mockingoose', () => {
         jest.clearAllMocks()
     })
 
-    describe("Test Both Fields Are Set", () => {
+    describe("Test Both Fields Are Set", () => { //purpose
         it('Validate Model', async () => {
             const todo = new Note({
                 title: "Task Note",
-                description: "" // "This can't be blank"
+                description: "This can't be blank"
             });
 
             const result = await todo.validateSync();
-            expect(result).toBe(undefined);
+            expect(result).toBe(undefined); //ensures the test passes, otherwise throw error
         });
     })
 })
